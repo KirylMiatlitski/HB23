@@ -10,27 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.epam.course.basic.controller.command.Command;
 import by.epam.course.basic.controller.command.CommandProvider;
+import by.epam.course.basic.controller.command.PageNames;
 import by.epam.course.basic.controller.exception.CommandException;
 
-public class ServletController  extends  HttpServlet{
+public class ServletController extends HttpServlet {
 	private static final String COMMAND_NAME = "command";
 	private final CommandProvider provider = new CommandProvider();
-	 
+
 	private static final long serialVersionUID = 2916059075792547777L;
 
-	public ServletController(){
-  	}
-	
-	
-	
+	public ServletController() {
+	}
+
 	@Override
 	public void init() throws ServletException {
 	}
 
-
-
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String commandName = null;
 		Command command = null;
 		String page = null;
@@ -39,18 +37,20 @@ public class ServletController  extends  HttpServlet{
 		try {
 			page = command.execute(request, response);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-			
+
 			if (dispatcher != null) {
 				dispatcher.forward(request, response);
-				
+
 			}
 		} catch (CommandException e) {
-			// Logger.error(e);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(PageNames.ERROR_PAGE);
+			dispatcher.forward(request, response);
 		}
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String commandName = null;
 		Command command = null;
 		String url = null;
@@ -62,9 +62,8 @@ public class ServletController  extends  HttpServlet{
 			url = command.execute(request, response);
 			response.sendRedirect(request.getContextPath() + url);
 		} catch (CommandException e) {
-			// Logger.error(e);
+			response.sendRedirect(request.getContextPath() + PageNames.ERROR_PAGE);
 		}
 	}
-	
-	
+
 }

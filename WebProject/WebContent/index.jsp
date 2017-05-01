@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<title>Untitled Page</title>
+<title>Home Bill System</title>
 <meta name="generator"
 	content="WYSIWYG Web Builder 12 Trial Version - http://www.wysiwygwebbuilder.com">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -368,7 +368,8 @@ a:hover {
 						
 						
 						<span style="color: #000000; font-family: Arial; font-size: 13px;"><br /><br />Created
-							by K. Miatlitski</span>
+							by K. Miatlitski<br />
+							Description: System, where users can registare in the system and track current numbers of Water and Electricity balance</span>
 					</div>
 				</div>
 			</div>

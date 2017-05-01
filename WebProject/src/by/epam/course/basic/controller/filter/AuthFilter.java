@@ -19,9 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import by.epam.course.basic.beans.users.User;
 
-/**
- * Servlet Filter implementation class AuthFilter
- */
 @WebFilter("/AuthFilter")
 public class AuthFilter implements Filter {
 	

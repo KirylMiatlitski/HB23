@@ -8,5 +8,6 @@ import by.epam.course.basic.dao.exception.DAOException;
 
 public interface AccountDAO {
 	Account getAccountByUser(User user) throws DAOException;
+
 	ArrayList<Account> getAllAccounts() throws DAOException;
 }

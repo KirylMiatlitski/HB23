@@ -15,7 +15,7 @@ import by.epam.course.basic.beans.users.User;
 import by.epam.course.basic.dao.exception.DAOException;
 import by.epam.course.basic.dao.interfaces.AccountDAO;
 
-public class SQLAccountDAO implements AccountDAO{
+public class SQLAccountDAO implements AccountDAO {
 
 	@Override
 	public Account getAccountByUser(User user) throws DAOException {
@@ -24,9 +24,14 @@ public class SQLAccountDAO implements AccountDAO{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Account account = null;
-		Electricity electricity= null;
-		Water water= null;
+		Electricity electricity = null;
+		Water water = null;
 		try {
+			
+			if (user.getFirstName() == null || user.getLastName() == null || user.getAddress() ==null) {
+				throw new DAOException();
+			}
+			
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			con = DriverManager.getConnection(ConnectMSSQLServer.connectionString);
 			st = con.createStatement();
@@ -38,7 +43,7 @@ public class SQLAccountDAO implements AccountDAO{
 			rs = ps.executeQuery();
 			int count = 0;
 			while (rs.next()) {
-				if (account == null){
+				if (account == null) {
 					account = new Account();
 					electricity = new Electricity();
 					water = new Water();
@@ -53,15 +58,15 @@ public class SQLAccountDAO implements AccountDAO{
 					throw new DAOException();
 				}
 			}
-			
-			count=0;
+
+			count = 0;
 			sql = "SELECT [Balance_Cold_Water],[Balance_Hot_Water]  FROM [Web].[dbo].[WaterInfo] where Account_ID=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, account.getAccount_ID());
-	
+
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				if (account == null){
+				if (account == null) {
 					throw new DAOException();
 				}
 				water.setAccount_ID(account.getAccount_ID());
@@ -78,7 +83,6 @@ public class SQLAccountDAO implements AccountDAO{
 		} catch (ClassNotFoundException e) {
 			throw new DAOException();
 		} catch (SQLException e) {
-			System.out.println(e);
 			throw new DAOException();
 		} finally {
 			try {

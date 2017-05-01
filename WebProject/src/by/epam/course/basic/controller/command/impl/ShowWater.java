@@ -22,12 +22,12 @@ public class ShowWater implements Command {
 		User user = (User) session.getAttribute("PRINCIPAL");
 		Account account;
 		try {
-			if (user.getFirstName()!= null && user.getLastName()!= null && user.getAddress()!= null) {
-				
+			if (user.getFirstName() != null && user.getLastName() != null && user.getAddress() != null) {
+
 				AccountsService accountService = ServiceFactory.getInstance().getAccountingService();
 				account = accountService.getAccount(user);
-				
-				if (account == null){
+
+				if (account == null) {
 					pagePath = PageNames.ERROR_PAGE;
 					return pagePath;
 				}
@@ -40,11 +40,10 @@ public class ShowWater implements Command {
 				pagePath = PageNames.ERROR_PAGE;
 				return pagePath;
 			}
-			
+
 		} catch (ServiceException e) {
 			pagePath = PageNames.ERROR_PAGE;
 			return pagePath;
-			// show error message
 		}
 	}
 

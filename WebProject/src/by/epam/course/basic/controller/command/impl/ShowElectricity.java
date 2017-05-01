@@ -13,7 +13,7 @@ import by.epam.course.basic.services.exception.ServiceException;
 import by.epam.course.basic.services.factory.ServiceFactory;
 import by.epam.course.basic.services.interfaces.AccountsService;
 
-public class ShowElectricity implements Command{
+public class ShowElectricity implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -22,12 +22,12 @@ public class ShowElectricity implements Command{
 		User user = (User) session.getAttribute("PRINCIPAL");
 		Account account;
 		try {
-			if (user.getFirstName()!= null && user.getLastName()!= null && user.getAddress()!= null) {
-				
+			if (user.getFirstName() != null && user.getLastName() != null && user.getAddress() != null) {
+
 				AccountsService accountService = ServiceFactory.getInstance().getAccountingService();
 				account = accountService.getAccount(user);
-				
-				if (account == null){
+
+				if (account == null) {
 					pagePath = PageNames.ERROR_PAGE;
 					return pagePath;
 				}
@@ -41,11 +41,10 @@ public class ShowElectricity implements Command{
 				pagePath = PageNames.ERROR_PAGE;
 				return pagePath;
 			}
-			
+
 		} catch (ServiceException e) {
 			pagePath = PageNames.ERROR_PAGE;
 			return pagePath;
-			// show error message
 		}
 	}
 

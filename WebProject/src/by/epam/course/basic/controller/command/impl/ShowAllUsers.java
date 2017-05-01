@@ -30,7 +30,6 @@ public class ShowAllUsers implements Command {
 		} catch (ServiceException e) {
 			pagePath = PageNames.ERROR_PAGE;
 			return pagePath;
-			// show error message
 		}
 
 	}

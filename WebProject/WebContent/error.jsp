@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>We have found an error</title>
 </head>
 <body>
 	
+	<a href="/WebProject/main.jsp"> Back to Main Page</a> <br />
 	
 	Sorry =(
 </body>

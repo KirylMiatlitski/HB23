@@ -18,12 +18,17 @@ public class SQLUserDAO implements UserDAO {
 
 	@Override
 	public User signin(UserAuth user) throws DAOException {
-		
+
 		Connection con = null;
 		Statement st = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
+
+			if (user.getLogin() == null || user.getPassword() == null) {
+				throw new DAOException();
+			}
+
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			con = DriverManager.getConnection(ConnectMSSQLServer.connectionString);
 			st = con.createStatement();
@@ -35,7 +40,7 @@ public class SQLUserDAO implements UserDAO {
 			User resultUser = null;
 			int count = 0;
 			while (rs.next()) {
-				if (resultUser == null){
+				if (resultUser == null) {
 					resultUser = new User();
 				}
 				resultUser.setFirstName(rs.getString("FirstName"));
@@ -92,7 +97,6 @@ public class SQLUserDAO implements UserDAO {
 
 			while (rs.next()) {
 				if (rs.getInt("CountRows") > 0) {
-					// Error message
 					con.rollback();
 					return false;
 				}
@@ -103,11 +107,10 @@ public class SQLUserDAO implements UserDAO {
 			ps.setString(2, user.getPassword());
 			countRows = ps.executeUpdate();
 			if (countRows != 1) {
-				// Error message
 				con.rollback();
 				return false;
 			}
-			
+
 			sql = "INSERT INTO [dbo].[Users] ([User_ID],[FirstName],[LastName],[Address]) VALUES ((Select User_ID from [dbo].[UsersAuth] where Login = ?),?,?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, user.getLogin());
@@ -116,7 +119,6 @@ public class SQLUserDAO implements UserDAO {
 			ps.setString(4, userData.getAddress());
 			countRows = ps.executeUpdate();
 			if (countRows != 1) {
-				// Error message
 				con.rollback();
 				return false;
 			}
@@ -126,32 +128,28 @@ public class SQLUserDAO implements UserDAO {
 			ps.setString(1, user.getLogin());
 			countRows = ps.executeUpdate();
 			if (countRows != 1) {
-				// Error message
 				con.rollback();
 				return false;
 			}
-			
+
 			sql = "INSERT INTO [Web].[dbo].[WaterInfo] ([Account_ID],[Balance_Cold_Water],[Balance_Hot_Water]) VALUES ((SELECT [Account_ID]  FROM [Web].[dbo].[Accounts] where User_ID = (Select User_ID from [Web].[dbo].[UsersAuth] where Login = ?)),?,?)";
 			ps = con.prepareStatement(sql);
 			Random rand = new Random();
 			ps.setString(1, user.getLogin());
-			ps.setString(2, ((Integer)rand.nextInt(10)).toString());
-			ps.setString(3, ((Integer)rand.nextInt(10)).toString());
+			ps.setString(2, ((Integer) rand.nextInt(10)).toString());
+			ps.setString(3, ((Integer) rand.nextInt(10)).toString());
 			countRows = ps.executeUpdate();
 			if (countRows != 1) {
-				// Error message
 				con.rollback();
 				return false;
 			}
-			
-			
+
 			sql = "INSERT INTO [Web].[dbo].[ElectricityInfo] ([Account_ID],[balance]) VALUES((SELECT [Account_ID]  FROM [Web].[dbo].[Accounts] where User_ID = (Select User_ID from [Web].[dbo].[UsersAuth] where Login = ?)),?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, user.getLogin());
-			ps.setString(2, ((Integer)rand.nextInt(10)).toString());
+			ps.setString(2, ((Integer) rand.nextInt(10)).toString());
 			countRows = ps.executeUpdate();
 			if (countRows != 1) {
-				// Error message
 				con.rollback();
 				return false;
 			}
@@ -161,7 +159,7 @@ public class SQLUserDAO implements UserDAO {
 
 			throw new DAOException();
 		} catch (SQLException e) {
-			//System.out.println(e);
+
 			throw new DAOException(e);
 		} finally {
 			try {
@@ -229,7 +227,5 @@ public class SQLUserDAO implements UserDAO {
 			}
 		}
 	}
-
-	
 
 }
