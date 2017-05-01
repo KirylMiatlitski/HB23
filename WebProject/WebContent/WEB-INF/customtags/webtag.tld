@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<taglib xmlns="http://java.sun.com/JSP/TagLibraryDescriptor"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/webjsptaglibrary_2_0.xsd"
+	version="2.0">  
+	<tlib-version> 1.0 </tlib-version>
+	<short-name> printUsers </short-name>
+	<uri> /WEB-INF/customtags/webtag.tld </uri>
+
+
+	<tag>
+		<name> showAllUsersTag </name>
+		<tag-class> by.epam.course.basic.customtags.ShowAllUsersTag
+		</tag-class>
+		<body-content> empty </body-content>
+		<attribute>
+			<name>listItems</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+	</tag>
+
+
+
+</taglib>
