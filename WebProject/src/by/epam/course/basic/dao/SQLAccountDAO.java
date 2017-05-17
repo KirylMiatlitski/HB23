@@ -86,7 +86,7 @@ public class SQLAccountDAO implements AccountDAO {
 			throw new DAOException();
 		} finally {
 			try {
-				if (rs != null) {
+				if (rs != null) {// если выброс исключения произойдет при закрытии rs , то соединении  и не закроется
 					rs.close();
 				}
 				if (st != null) {

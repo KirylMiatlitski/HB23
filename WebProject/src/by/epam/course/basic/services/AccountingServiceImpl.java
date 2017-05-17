@@ -14,7 +14,8 @@ import by.epam.course.basic.services.interfaces.AccountsService;
 
 public class AccountingServiceImpl implements AccountsService {
 
-
+// сервисы должны валидировать входные параметры
+	// да и лежит этот класс как-то кривовато
 	@Override
 	public User signIn(UserAuth user) throws ServiceException {
 		
@@ -38,7 +39,7 @@ public class AccountingServiceImpl implements AccountsService {
 			return accountsDAO.registration(user, userData);
 			
 		} catch (DAOException e) {
-			throw new ServiceException();
+			throw new ServiceException();// теряешь реальное исключение, оборачивай его при пробрасывании new ServiceException(e)
 		}
 	}
 

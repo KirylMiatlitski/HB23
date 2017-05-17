@@ -1,6 +1,6 @@
 package by.epam.course.basic.beans.users;
 
-public class User {
+public class User {// куда пропал Serializable?
 	
 	private String firstName;
 	private String lastName;
